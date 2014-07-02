@@ -413,6 +413,7 @@
 				32DD5728195D796900D3BE4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		32DD5729195D796900D3BE4C /* Build configuration list for PBXNativeTarget "iTunesRSSTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +422,7 @@
 				32DD572B195D796900D3BE4C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

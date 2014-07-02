@@ -34,7 +34,6 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
                 let currentRunLoop = NSRunLoop.currentRunLoop()
                 currentRunLoop.addPort(NSMachPort(), forMode: NSDefaultRunLoopMode)
                 
-                
                 self.connection = NSURLConnection(request: self.request, delegate: self, startImmediately: false)
                 self.connection.scheduleInRunLoop(currentRunLoop, forMode: NSDefaultRunLoopMode)
                 
@@ -63,10 +62,9 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
         self.connection.unscheduleFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
         self.connection = nil
         
-        weak var weakSelf = self
         dispatch_async(self.callbackQueue != nil ? self.callbackQueue : dispatch_get_main_queue(), {
-            if weakSelf?.completionHandler {
-                weakSelf?.completionHandler(weakSelf!, weakSelf?.error)
+            if self.completionHandler {
+                self.completionHandler(self, self.error)
             }
         })
     }
