@@ -10,6 +10,7 @@ import Foundation
 
 class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     let request: NSURLRequest
+    let queue = dispatch_queue_create("com.connection.ITRURLOperation", DISPATCH_QUEUE_CONCURRENT)
     var response: NSHTTPURLResponse!
     var responseData: NSMutableData!
     var connection: NSURLConnection!
@@ -29,14 +30,14 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     }
     
     func start() {
+        let currentRunLoop = NSRunLoop.currentRunLoop()
+        currentRunLoop.addPort(NSMachPort(), forMode: NSDefaultRunLoopMode)
+        
+        self.connection = NSURLConnection(request: self.request, delegate: self, startImmediately: false)
+        self.connection.scheduleInRunLoop(currentRunLoop, forMode: NSDefaultRunLoopMode)
+        
         let networkingBlock: dispatch_block_t = {
             autoreleasepool {
-                let currentRunLoop = NSRunLoop.currentRunLoop()
-                currentRunLoop.addPort(NSMachPort(), forMode: NSDefaultRunLoopMode)
-                
-                self.connection = NSURLConnection(request: self.request, delegate: self, startImmediately: false)
-                self.connection.scheduleInRunLoop(currentRunLoop, forMode: NSDefaultRunLoopMode)
-                
                 if self.connection {
                     self.connection.start()
                     self.responseData = NSMutableData()
@@ -46,16 +47,18 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
             }
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), networkingBlock);
+        dispatch_async(self.queue, networkingBlock);
     }
     
     func cancel() {
-        if self.connection {
-            self.connection.cancel()
-            
-            let error: NSError = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSURLErrorFailingURLErrorKey : self.request.URL])
-            self.connection(self.connection, didFailWithError: error)
-        }
+        dispatch_async(self.queue, {
+            if self.connection {
+                self.connection.cancel()
+                
+                let error: NSError = NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: [NSURLErrorFailingURLErrorKey : self.request.URL])
+                self.connection(self.connection, didFailWithError: error)
+            }
+        })
     }
     
     func finish() {

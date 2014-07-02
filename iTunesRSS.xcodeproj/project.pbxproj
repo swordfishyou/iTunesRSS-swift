@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		322BF4381963E86E003D70A9 /* ITRURLOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 322BF4371963E86E003D70A9 /* ITRURLOperationTests.swift */; };
 		32DD5715195D796900D3BE4C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD5714195D796900D3BE4C /* AppDelegate.swift */; };
 		32DD5717195D796900D3BE4C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32DD5716195D796900D3BE4C /* Images.xcassets */; };
-		32DD5723195D796900D3BE4C /* iTunesRSSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD5722195D796900D3BE4C /* iTunesRSSTests.swift */; };
 		32DD572E195D8DEA00D3BE4C /* ITRFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD572D195D8DEA00D3BE4C /* ITRFeedViewController.swift */; };
 		32DD5731195D8F7600D3BE4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32DD5730195D8F7600D3BE4C /* Main.storyboard */; };
 		32DD5734195D92FC00D3BE4C /* ITRURLOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DD5733195D92FC00D3BE4C /* ITRURLOperation.swift */; };
@@ -26,13 +26,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		322BF4371963E86E003D70A9 /* ITRURLOperationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ITRURLOperationTests.swift; path = Classes/Networking/ITRURLOperationTests.swift; sourceTree = "<group>"; };
 		32DD570F195D796900D3BE4C /* iTunesRSS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesRSS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32DD5713195D796900D3BE4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32DD5714195D796900D3BE4C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32DD5716195D796900D3BE4C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		32DD571C195D796900D3BE4C /* iTunesRSSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iTunesRSSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32DD5721195D796900D3BE4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		32DD5722195D796900D3BE4C /* iTunesRSSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iTunesRSSTests.swift; sourceTree = "<group>"; };
 		32DD572D195D8DEA00D3BE4C /* ITRFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ITRFeedViewController.swift; path = Classes/Controllers/ITRFeedViewController.swift; sourceTree = "<group>"; };
 		32DD5730195D8F7600D3BE4C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		32DD5733195D92FC00D3BE4C /* ITRURLOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ITRURLOperation.swift; path = Classes/Networking/ITRURLOperation.swift; sourceTree = "<group>"; };
@@ -56,6 +56,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		322BF4341963E807003D70A9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		322BF4351963E821003D70A9 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				322BF4361963E82D003D70A9 /* Networking */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		322BF4361963E82D003D70A9 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				322BF4371963E86E003D70A9 /* ITRURLOperationTests.swift */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		32DD5706195D796900D3BE4C = {
 			isa = PBXGroup;
 			children = (
@@ -96,7 +119,7 @@
 		32DD571F195D796900D3BE4C /* iTunesRSSTests */ = {
 			isa = PBXGroup;
 			children = (
-				32DD5722195D796900D3BE4C /* iTunesRSSTests.swift */,
+				322BF4351963E821003D70A9 /* Classes */,
 				32DD5720195D796900D3BE4C /* Supporting Files */,
 			);
 			path = iTunesRSSTests;
@@ -113,6 +136,7 @@
 		32DD572C195D8D9700D3BE4C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				322BF4341963E807003D70A9 /* Models */,
 				32DD5732195D92BE00D3BE4C /* Networking */,
 				32DD572F195D8DF800D3BE4C /* Controllers */,
 				32DD5714195D796900D3BE4C /* AppDelegate.swift */,
@@ -244,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32DD5723195D796900D3BE4C /* iTunesRSSTests.swift in Sources */,
+				322BF4381963E86E003D70A9 /* ITRURLOperationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
