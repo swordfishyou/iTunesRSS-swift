@@ -10,12 +10,12 @@ import Foundation
 
 class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     let request: NSURLRequest
-    var response: NSURLResponse!
+    var response: NSHTTPURLResponse!
     var responseData: NSMutableData!
     var connection: NSURLConnection!
-    var error: NSError!
-    var callbackQueue: dispatch_queue_t!
-    var completionHandler: ((ITRURLOperation, NSError?) -> ())!
+    var error: NSError?
+    var callbackQueue: dispatch_queue_t?
+    var completionHandler: ((ITRURLOperation, NSError?) -> ())?
     
     init(request: NSURLRequest) {
         assert(request != nil, "Request can not be nil")
@@ -64,12 +64,12 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
         
         dispatch_async(self.callbackQueue != nil ? self.callbackQueue : dispatch_get_main_queue(), {
             if self.completionHandler {
-                self.completionHandler(self, self.error)
+                self.completionHandler!(self, self.error)
             }
         })
     }
     
-    func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
+    func connection(connection: NSURLConnection!, didReceiveResponse response: NSHTTPURLResponse!) {
         self.responseData.length = 0
         self.response = response
     }
