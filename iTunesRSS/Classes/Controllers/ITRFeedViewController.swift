@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
-class ITRFeedViewController : UIViewController {
 
+class ITRFeedViewController : UIViewController {
+    
 }

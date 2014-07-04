@@ -11,9 +11,10 @@ import Foundation
 class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     let request: NSURLRequest
     let queue = dispatch_queue_create("com.connection.ITRURLOperation", DISPATCH_QUEUE_CONCURRENT)
-    var response: NSHTTPURLResponse!
+    var response: NSURLResponse!
     var responseData: NSMutableData!
     var connection: NSURLConnection!
+    var runLoop: NSRunLoop!
     var error: NSError?
     var callbackQueue: dispatch_queue_t?
     var completionHandler: ((ITRURLOperation, NSError?) -> ())?
@@ -30,20 +31,20 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     }
     
     func start() {
-        let currentRunLoop = NSRunLoop.currentRunLoop()
-        currentRunLoop.addPort(NSMachPort(), forMode: NSDefaultRunLoopMode)
-        
         self.connection = NSURLConnection(request: self.request, delegate: self, startImmediately: false)
-        self.connection.scheduleInRunLoop(currentRunLoop, forMode: NSDefaultRunLoopMode)
         
         let networkingBlock: dispatch_block_t = {
             autoreleasepool {
+                self.runLoop = NSRunLoop.currentRunLoop()
+                self.runLoop.addPort(NSMachPort(), forMode: NSDefaultRunLoopMode)
+                self.connection.scheduleInRunLoop(self.runLoop, forMode: NSDefaultRunLoopMode)
+                
                 if self.connection {
                     self.connection.start()
                     self.responseData = NSMutableData()
                 }
                 
-                currentRunLoop.run()
+                self.runLoop.run()
             }
         }
         
@@ -62,7 +63,7 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
     }
     
     func finish() {
-        self.connection.unscheduleFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        self.connection.unscheduleFromRunLoop(self.runLoop, forMode: NSDefaultRunLoopMode)
         self.connection = nil
         
         dispatch_async(self.callbackQueue != nil ? self.callbackQueue : dispatch_get_main_queue(), {
@@ -72,7 +73,7 @@ class ITRURLOperation: NSObject, NSURLConnectionDataDelegate {
         })
     }
     
-    func connection(connection: NSURLConnection!, didReceiveResponse response: NSHTTPURLResponse!) {
+    func connection(connection: NSURLConnection!, didReceiveResponse response: NSURLResponse!) {
         self.responseData.length = 0
         self.response = response
     }
